@@ -9,6 +9,7 @@
 1. [Questions?](README.md#questions?)
 
 ## Problem
+
 The Bureau of Transportation Statistics regularly makes available data on the number of vehicles, equipment, passengers and pedestrians crossing into the United States by land.
 
 **I calculate the total number of times vehicles, equipment, passengers and pedestrians cross the U.S.-Canadian and U.S.-Mexican borders each month. I also calculate the running monthly average of total number of crossings for that type of crossing and border.**
@@ -31,6 +32,7 @@ Eagle Pass,Texas,2303,US-Mexico Border,01/01/2019 12:00:00 AM,Pedestrians,56810,
 ```
 
 ## Output
+
 Using the input file, I write a program to 
 
 * Sum the total number of crossings (`Value`) of each type of vehicle or equipment, or passengers or pedestrians, that crossed the border that month, regardless of what port was used. 
@@ -68,6 +70,14 @@ Firstly, the program would read the input file `Border_Crossing_Entry_Data.csv` 
 Secondly, the program would calculate the running monthly average of total crossings for that border and means of crossing in all previous months of this year, and save the results `Average` together with original information in the nested dictionary `bm_to_dv`.
 
 Finally, the program would use information in the nested dictionary `bm_to_dv`, to write all requested output data to a csv file named `report.csv` in the top-most `output` directory of my repository.
+
+### Time complexity
+
+Define the number of lines in the input dataset as n. Although there are many `nested for loops` in my program, the time complexity of it is `O(n)`. Details of the time and space analysis can be found in the comments of the program `border_analytics.py`
+
+### Limitations
+
+This program can only work for input dataset of limited scale. If the input dataset is too big, then the program should be modified a little bit. For example, the program need to read, calculate and write by using `mini-batch` methods. But the main algorithms are the same.
 
 ## Instructions
 

@@ -24,16 +24,23 @@ def read_input(input_file_name):
 
     bm respresents border and measure 
     dv represents date and value
+
+    Time complexity: O(n)
     """
 
     with open(input_file_name,newline='') as input_file:
         reader = csv.DictReader(input_file)
         bm_to_dv = {}       # Nested dictionary saves all information from input
-        for row in reader:
+
+        # The number of rows in the input dataset is n
+        for row in reader:   # O(n)
             date,value,measure,border = get_info(row)
             month = date.month
             year = date.year
             bm = str([border,measure])      # Convert border and measure back later by eval()  
+            # The number of different border measure combinations is a.
+            # The number of different years is b
+            # a <= n, b <= n, ab <= n
 
             if (bm in bm_to_dv.keys()):
                 if (year not in bm_to_dv[bm].keys()):
@@ -47,9 +54,9 @@ def read_input(input_file_name):
     
     # Calculate monthly average of total crossings for certain border and measures 
     # of crossing in all previous months.
-    for bm in bm_to_dv.keys():
-        for year in bm_to_dv[bm].keys():
-            bm_to_dv[bm][year] = get_values(bm_to_dv[bm][year])
+    for bm in bm_to_dv.keys():    # O(a)
+        for year in bm_to_dv[bm].keys():    # O(ab)
+            bm_to_dv[bm][year] = get_values(bm_to_dv[bm][year]) # O(n)
 
     return bm_to_dv 
 
@@ -62,30 +69,35 @@ def get_values(month_to_value):
     # total crossings including this month)
 
     # total crossings including this month is saved to calculate # average crossing for next month
+
+    Time complexity: O(1)
     """
 
     month_to_values = {}
     
-    for month in sorted(month_to_value):
+    # There are at most 12 months in the dictionary "month_to_values"
+    for month in sorted(month_to_value):    # O(1) 
         if (month-1 not in month_to_value):
             month_to_values[month] = (month_to_value[month],0,month_to_value[month])
         else:
-            month_to_values[month] = (month_to_value[month],round(month_to_values[month-1][2]/(month-1)),month_to_values[month-1][2]+month_to_value[month]) 
+            month_to_values[month] = (month_to_value[month],round(float(month_to_values[month-1][2]/(month-1))),month_to_values[month-1][2]+month_to_value[month]) 
     
     return month_to_values
 
 def write_output(bm_to_dv,output_file_name):
     """
     Output a csv file from the nested dictionary "bm_to_dv"
+
+    Time complexity: O(n)
     """
 
     records = []
     t = time(12, 0, 0)      # Set up time 12:00:00 AM
 
 
-    for bm,year_to_month in bm_to_dv.items():
-        for year,month_to_values in year_to_month.items():
-            for month,values in month_to_values.items():
+    for bm,year_to_month in bm_to_dv.items():   # O(a)
+        for year,month_to_values in year_to_month.items():  # O(ab)
+            for month,values in month_to_values.items():    # O(n)
                 d = datetime(year, month, 1)        # Set up date mm/01/yyyy
                 dt = datetime.combine(d, t)         # Combine date and time to "mm/01/yyyy 12:00:00 AM"
                 record = eval(bm)+[dt.strftime("%m/%d/%Y %H:%M:%S AM"),values[0],values[1],year,month]
@@ -101,7 +113,7 @@ def write_output(bm_to_dv,output_file_name):
         fieldnames = ['Border', 'Date','Measure','Value','Average']
         writer = csv.DictWriter(output_file, fieldnames=fieldnames)
         writer.writeheader()
-        for record in records:
+        for record in records:  # O(n)
             writer.writerow({'Border': record[0], 'Date': record[2],'Measure': record[1],'Value': record[3],'Average': record[4]})
         
 if __name__ == "__main__":
