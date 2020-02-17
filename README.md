@@ -50,7 +50,6 @@ US-Canada Border,03/01/2019 12:00:00 AM,Trains,19,0
 US-Mexico Border,02/01/2019 12:00:00 AM,Pedestrians,172163,56810
 US-Canada Border,02/01/2019 12:00:00 AM,Truck Containers Empty,1319,0
 US-Mexico Border,01/01/2019 12:00:00 AM,Pedestrians,56810,0
-
 ```
 
 The lines are sorted in descending order by 
@@ -63,13 +62,13 @@ The column, `Average`, is for the running monthly average of total crossings for
 
 ## Approach
 
-`Python` program is used to solve the problem.
+`Python` program is used to solve the problem. `Dictionary` and `List` are mainly used to handle `input` and `output`.
 
 Firstly, the program would read the input file `Border_Crossing_Entry_Data.csv` in the top-most `input` directory of my repository, and save all requested information to a nested dictionary `bm_to_dv`, where the key of the dictionary' top-most level is `Border and Measure` and the value is `Year`; the key of the dictionary' second level is `Year` and the value is `Month`; and the key of the dictionary' bottom level is `Month` and the value is `total Value of crossings that month`.
 
 Secondly, the program would calculate the running monthly average of total crossings for that border and means of crossing in all previous months of this year, and save the results `Average` together with original information in the nested dictionary `bm_to_dv`.
 
-Finally, the program would use information in the nested dictionary `bm_to_dv`, to write all requested output data to a csv file named `report.csv` in the top-most `output` directory of my repository.
+Finally, the program would use information in the nested dictionary `bm_to_dv`, to write all requested output data in specified order to a csv file named `report.csv` in the top-most `output` directory of my repository.
 
 ### Time complexity
 
